@@ -1,5 +1,4 @@
 import React from "react";
-import Button from './Button'
 
 interface ProductCardProps {
   title: string;
@@ -14,7 +13,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   description,
   thumbnail,
 }) => {
-  const x = 0;
   return (
     <div
       style={{
@@ -24,7 +22,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         maxWidth: 300,
       }}
     >
-      <Button />
       <img
         src={thumbnail}
         alt={title}
