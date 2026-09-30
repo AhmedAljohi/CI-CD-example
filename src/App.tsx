@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div style={{ padding: 24 }}>
-      <h1>Product List</h1>
+      <h1>Product List testing update docker image</h1>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
