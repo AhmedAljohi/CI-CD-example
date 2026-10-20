@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+  push:
+    tags:
+      - 'v*'
+
 jobs:
   unit-test:
     name: unit test
@@ -34,6 +38,7 @@ jobs:
   docker:
     name: Build and push Docker image
     needs: unit-test
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +49,7 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v7
         with:
           image: ahmedaljohi/reactapp
+          tags: ${{ github.ref_name }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
