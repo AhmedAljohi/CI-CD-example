@@ -1,9 +1,13 @@
+
 name: unit-test
 
 on:
   pull_request:
     branches:
       - master
+
+  release:
+    types: [published]
 
 jobs:
   unit-test:
@@ -34,16 +38,20 @@ jobs:
   docker:
     name: Build and push Docker image
     needs: unit-test
+    if: github.event_name == 'release' && startsWith(github.event.release.tag_name, 'v')
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout release code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Build and push Docker image
         uses: mr-smithers-excellent/docker-build-push@v7
         with:
           image: ahmedaljohi/reactapp
+          tags: ${{ github.event.release.tag_name }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
